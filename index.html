@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Game</title>
+    <link rel="stylesheet" href="./dist/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1 id="question">This is question</h1>
+
+        <!-- keyboard box -->
+        <div id="keyboard">
+            <!-- numbers row -->
+            <div class="btn-row">
+                <div class="btn-key special zenkaku-hankaku" id="id_zen">半角/全角</div>
+                <div class="btn-key number" id="id_1">1</div>
+                <div class="btn-key number" id="id_2">2</div>
+                <div class="btn-key number" id="id_3">3</div>
+                <div class="btn-key number" id="id_4">4</div>
+                <div class="btn-key number" id="id_5">5</div>
+                <div class="btn-key number" id="id_6">6</div>
+                <div class="btn-key number" id="id_7">7</div>
+                <div class="btn-key number" id="id_8">8</div>
+                <div class="btn-key number" id="id_9">9</div>
+                <div class="btn-key number" id="id_0">0</div>
+                <div class="btn-key special minus" id="id_minux">-</div>
+                <div class="btn-key special caret" id="id_caret">^</div>
+                <div class="btn-key special yenmark" id="id_yen">￥</div>
+                <div class="btn-key special backspace" id="id_backspace">Backspace</div>
+            </div>
+            <!-- qwert row (top row) -->
+            <div class="btn-row">
+                <div class="btn-key special tab" id="id_tab">Tab</div>
+                <div class="btn-key normal" id="id_q">Q</div>
+                <div class="btn-key normal" id="id_w">W</div>
+                <div class="btn-key normal" id="id_e">E</div>
+                <div class="btn-key normal" id="id_r">R</div>
+                <div class="btn-key normal" id="id_t">T</div>
+                <div class="btn-key normal" id="id_y">Y</div>
+                <div class="btn-key normal" id="id_u">U</div>
+                <div class="btn-key normal" id="id_i">I</div>
+                <div class="btn-key normal" id="id_o">O</div>
+                <div class="btn-key normal" id="id_p">P</div>
+                <div class="btn-key special atmark" id="id_atmark">@</div>
+                <div class="btn-key special bracket" id="id_bracket_right_big">[</div>
+                <div class="btn-key special enter" id="id_enter">Enter</div>
+            </div>
+            <!-- asdf row (home row) -->
+            <div class="btn-row">
+                <div class="btn-key special caps" id="id_caps">Caps</div>
+                <div class="btn-key normal" id="id_a">A</div>
+                <div class="btn-key normal" id="id_s">S</div>
+                <div class="btn-key normal" id="id_d">D</div>
+                <div class="btn-key normal" id="id_f">F</div>
+                <div class="btn-key normal" id="id_g">G</div>
+                <div class="btn-key normal" id="id_h">H</div>
+                <div class="btn-key normal" id="id_j">J</div>
+                <div class="btn-key normal" id="id_k">K</div>
+                <div class="btn-key normal" id="id_l">L</div>
+                <div class="btn-key special" id="id_plus">+</div>
+                <div class="btn-key special" id="id_colon">:</div>
+                <div class="btn-key special" id="id_bracket_left_big">]</div>
+            </div>
+            <!-- zxcv row (bottom row) -->
+            <div class="btn-row">
+                <div class="btn-key special shift" id="id_shift_left">Shift</div>
+                <div class="btn-key normal" id="id_z">Z</div>
+                <div class="btn-key normal" id="id_x">X</div>
+                <div class="btn-key normal" id="id_c">C</div>
+                <div class="btn-key normal" id="id_v">V</div>
+                <div class="btn-key normal" id="id_b">B</div>
+                <div class="btn-key normal" id="id_n">N</div>
+                <div class="btn-key normal" id="id_m">M</div>
+                <div class="btn-key special comma" id="id_comma">,</div>
+                <div class="btn-key special fullstop" id="id_fullstop">.</div>
+                <div class="btn-key special slash" id="id_forwad_slash">/</div>
+                <div class="btn-key special slash" id="id_back_slash">\</div>
+                <div class="btn-key special shift" id="id_shift_right">Shift</div>
+            </div>
+            <!-- space row -->
+            <div class="btn-row">
+                <div class="btn-key special ctrl" id="id_"></div>
+                <div class="btn-key normal" id="id_"></div>
+                <div class="btn-key normal" id="id_"></div>
+                <div class="btn-key normal" id="id_"></div>
+                <div class="btn-key normal" id="id_"></div>
+                <div class="btn-key special space" id="id_space"></div>
+                <div class="btn-key normal"></div>
+                <div class="btn-key normal"></div>
+                <div class="btn-key special"></div>
+                <div class="btn-key special"></div>
+                <div class="btn-key special"></div>
+                <div class="btn-key special"></div>
+                <div class="btn-key special"></div>
+            </div>
+        </div>
+
+        <div id="typing_area">
+            <input type="text" name="textbox" id="textbox" onkeyup="this.value = this.value.toUpperCase();">
+        </div>
+    </div>
+    <div class="score">
+        <h1 id="char_cnt"></h1>
+    </div>
+
+    <div class="setting">
+        <div class="sound">
+            <input type="checkbox" name="sound" id="sound_play"> Sound
+        </div>
+
+    </div>
+    <script src="./dist/script.js"></script>
+</body>
+
+</html>

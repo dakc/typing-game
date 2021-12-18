@@ -1,0 +1,105 @@
+$btnWidth:50px;
+$btnHeight:50px;
+
+$maxWidth: 850px;
+
+body {
+    text-align: center;
+}
+
+.score {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+
+    #char_cnt {
+        color: #ff0000;
+    }
+}
+
+
+#keyboard {
+    max-width: $maxWidth;
+    margin: 0 auto;
+    box-shadow: 0 2px 7px 0 rgb(0 0 0 / 50%);
+    border-radius: 3px;
+    border-bottom: 0 solid #CCC;
+    overflow: hidden;
+    transition: max-height .5s ease, padding .3s linear;
+
+    .btn-row {
+        display: flex;
+        height: calc(#{$btnHeight} + 10px);
+
+        .btn-key {
+            background: #EEE;
+            color: #666;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 16px;
+            text-align: center;
+            width: $btnWidth;
+            height: $btnHeight;
+            border-radius: 4px;
+            border: 1px solid #CCC;
+            border-bottom: 3px solid #CCC;
+            margin: 2px;
+            overflow-wrap: break-word;
+            cursor: pointer;
+
+            &:hover {
+                box-shadow: 0 0 2px 2px #eef105;
+                transition: box-shadow .3s ease;
+            }
+        }
+
+        .backspace {
+            width: calc(#{$btnWidth} + 10px);
+        }
+
+        .enter {
+            width: calc(#{$btnWidth} + 25px);
+            height: calc(#{$btnHeight} *2 + 10px);
+            margin-left: 25px;
+        }
+
+        .tab {
+            width: calc(#{$btnWidth} + 20px);
+        }
+
+        .caps {
+            width: calc(#{$btnWidth} + 30px);
+        }
+
+        .shift {
+            width: calc(#{$btnWidth} + 60px);
+        }
+
+        .space {
+            width: calc(#{$btnWidth} * 4);
+        }
+    }
+}
+
+#typing_area {
+    margin-top: 20px;
+
+    input {
+        background: #EEE;
+        font-size: 40px;
+        padding: 10px;
+        border: none;
+        margin-bottom: 15px;
+        width: $maxWidth;
+    }
+}
+
+// focus key either on hover or on selection
+.select {
+    box-shadow: 0 0 2px 2px #1c94c4;
+    transition: box-shadow .3s ease;
+}
+
+.select-error {
+    box-shadow: 0 0 2px 2px #c41c1c;
+    transition: box-shadow .3s ease;
+}

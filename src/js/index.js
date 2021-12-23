@@ -1,35 +1,47 @@
-const synth = window.speechSynthesis;
-if (!synth) alert("speechSynthesis not supported!!");
+// audio & speech initialization
+let isReadQuestion;
+let synth;
+let audioObj;
 
-const audioObj = new Audio("./wrong.mp3");
-audioObj.playbackRate = 10;
+try {
+    // flag for speech (default no read)
+    isReadQuestion = 0;
+    synth = window.speechSynthesis;
+    if (!synth) console.log("speechSynthesis not supported!!");
 
-// question list
-let questions = [
-    // Math.random().toString(36).substr(2, 10).toUpperCase(),
-    "HELLO, MY NAME IS ARYAN",
-    "I AM 5 YEAR OLD",
-    "I LIKE PLAYING SOCCER",
-    "I LIVE IN TOKIWA URAWA",
-    "NICE TO MEET YOU",
-];
-const RANDOM_QUESTION_CNT = 5;
-for (var i = 0; i < RANDOM_QUESTION_CNT; i++) {
-    questions.push(Math.random().toString(36).substr(2, 10).toUpperCase());
+    // for sound
+
+    audioObj = new Audio("./wrong.mp3");
+    audioObj.playbackRate = 10;
+} catch (error) {
+    console.error(error);
 }
 
-// for counting number of question
+// question list
 let cnt = 0;
-let question = questions[cnt];
+let questions = [];
+let RANDOM_QUESTION_CNT = 10;
+let STRING_LENGTH = 15;
 
-// index for character;
+
+// set the first question from the list
+let question;
+
+// index for character in a single question;
 let index = 0;
 let selChar = '';
 
-let isPlaySound = 1;
 
+
+// check if string is empty
 let isEmpty = (str) => !str || /^\s*$/.test(str);
 
+
+/**
+ * Get the dom element from its id
+ * @param {*} ch | id
+ * @returns dom element
+ */
 function selectedButton(ch) {
     try {
         return document.getElementById(`id_${ch.toLowerCase()}`);
@@ -41,32 +53,74 @@ function selectedButton(ch) {
     return false;
 }
 
-window.addEventListener('load', (event) => {
+function init() {
     // if checkbox is checked then play sound
-    isPlaySound = document.getElementById("sound_play").checked;
-    document.getElementById("sound_play").addEventListener("change", e => {
-        isPlaySound = e.target.checked;
-    })
+    isReadQuestion = document.getElementById("sound_play").checked;
 
     // focus textbox
     document.getElementById("textbox").focus();
 
-    // add key event listener for each key press
-    addKeyPressedEventListerToInputBox();
+
+    // select the first letter of the question
+    index = 0;
+    cnt = 0;
+    questions = [];
+    for (var i = 0; i < RANDOM_QUESTION_CNT; i++) {
+        questions.push(Math.random().toString(36).substr(2, STRING_LENGTH).toUpperCase());
+    }
+    question = questions[cnt];
+    selChar = question[index].toUpperCase();
+
 
     // set question
     document.getElementById("question").textContent = question;
 
-    // select the first letter of the question
-    index = 0;
-    selChar = question[index].toUpperCase();
     selectKey();
+
+    // set question content
+    const questionContentElm = document.getElementById("question_content");
+    questionContentElm.textContent = questions.join("\n");
+    // questionContentElm.addEventListener("change", e => {
+    //     console.log(e)
+    // })
+
+
+    // show setting window
+    document.querySelector(".set-button").addEventListener("click", () => {
+        let isShow = document.querySelector(".body").classList.contains("show");
+        if (isShow) {
+            document.querySelector(".body").classList.remove("show");
+        } else {
+            document.querySelector(".body").classList.add("show");
+        }
+    });
+
+    // show score
+    document.getElementById("score").textContent = `${cnt}/${questions.length}`;
+}
+window.addEventListener('load', () => {
+    document.getElementById("sound_play").addEventListener("change", e => {
+        isReadQuestion = e.target.checked;
+        if (isReadQuestion) utter(selChar);
+    })
+
+    // add key event listener for each key press
+    addEventListerToInputBox();
+
+    init();
 });
 
 
-function addKeyPressedEventListerToInputBox() {
+function addEventListerToInputBox() {
+    const textBox = document.getElementById("textbox");
+
+    // on focus hide setting
+    textBox.addEventListener("focus", () => {
+        document.querySelector(".body").classList.remove("show");
+    });
+
     // add event for key pressed in textbox
-    document.getElementById("textbox").addEventListener("keypress", e => {
+    textBox.addEventListener("keypress", e => {
         let inputChar = e.key.toUpperCase();
 
         console.log("inputChar", inputChar, e.keyCode);
@@ -79,12 +133,6 @@ function addKeyPressedEventListerToInputBox() {
         if (inputChar === selChar) {
             document.querySelectorAll("button.select").forEach(btn => btn.classList.remove("select"));
 
-            // if questions from the list are finished then finish the game
-            if (cnt >= questions.length) {
-                alert(`Complete :${cnt}`);
-                return true;
-            }
-
             // if all the characters from a question are done, then set next question from the list
             if (index >= question.length - 1) {
                 index = -1;
@@ -96,7 +144,17 @@ function addKeyPressedEventListerToInputBox() {
                 setTimeout(() => document.getElementById("textbox").value = "", 100);
 
                 // todo show number of chars typed
-                document.getElementById("char_cnt").textContent = cnt;
+                document.getElementById("score").textContent = `${cnt}/${questions.length}`;
+
+                // if questions from the list are finished then finish the game
+                if (cnt >= questions.length) {
+
+                    setTimeout(() => {
+                        alert("完成！！");
+                        init();
+                    }, 500);
+                    return true;
+                }
             }
 
             // shift the character
@@ -124,6 +182,13 @@ function addKeyPressedEventListerToInputBox() {
     })
 }
 
+
+/**
+ * Select character for question
+ * If the flag "isReadQuestion" is on,
+ * then it will read active character
+ * @returns 
+ */
 function selectKey() {
     if (isEmpty(selChar)) selChar = "space";
     if (selChar == ',') selChar = "comma";
@@ -134,9 +199,21 @@ function selectKey() {
     document.querySelectorAll(".select").forEach(btn => btn.classList.remove("select"));
     nextSelection.classList.add("select");
 
-    if (isPlaySound) {
-        var utterThis = new SpeechSynthesisUtterance(selChar);
+    if (isReadQuestion) utter(selChar);
+}
+
+
+/**
+ * Utter
+ * @param {*} str | string to be utterred
+ */
+function utter(str) {
+    try {
+        var utterThis = new SpeechSynthesisUtterance(str);
         utterThis.lang = 'en-US';
-        synth.speak(utterThis);
+        synth.speak(utterThis)
+    } catch (error) {
+        console.error(error);
     }
+
 }

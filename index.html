@@ -11,7 +11,9 @@
 
 <body>
     <div class="container">
-        <h1 id="question">This is question</h1>
+        <div class="header">
+            <h1 id="question">This is question</h1>
+        </div>
 
         <!-- keyboard box -->
         <div id="keyboard">
@@ -101,18 +103,47 @@
         </div>
 
         <div id="typing_area">
-            <input type="text" name="textbox" id="textbox" onkeyup="this.value = this.value.toUpperCase();">
-        </div>
-    </div>
-    <div class="score">
-        <h1 id="char_cnt"></h1>
-    </div>
-
-    <div class="setting">
-        <div class="sound">
-            <input type="checkbox" name="sound" id="sound_play"> Sound
+            <input type="text" name="textbox" id="textbox" oninput="this.value = this.value.toUpperCase();">
+            <span id="typing_area_remark">キーを入力する前にこちらのテキストボックスを選択してください。</span>
         </div>
 
+        <!-- setting box -->
+        <div id="setting">
+
+            <div class="header">
+                <div class="status">
+                    <span>進捗 : </span>
+                    <span id="score">0</span>
+                </div>
+                <div class="set-button">三</div>
+            </div>
+
+            <div class="body">
+                <h1 style="color: red;font-size: 40px;">※未完成</h1>
+                <div class="question-select">
+                    <div>
+                        <input type="checkbox" name="sound" id="sound_play"> 音声読み上げ
+                    </div>
+                    <div>
+                        文字列の長さ
+                        <input type="number" id="str_length" min="1" max="100" value="10">
+                    </div>
+                    <div>
+                        文字列の数
+                        <input type="number" id="question_nbr" min="1" max="100" value="10">
+                    </div>
+                </div>
+                <div class="question-text">
+                    <div>
+                        <h3>文字列の設定</h3>
+                        <textarea id="question_content" rows="10"></textarea>
+                    </div>
+                    <div>
+                        <button id="btn_save">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="./dist/script.js"></script>
 </body>

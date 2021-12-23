@@ -7,16 +7,9 @@ body {
     text-align: center;
 }
 
-.score {
-    position: absolute;
-    top: 0px;
-    right: 10px;
-
-    #char_cnt {
-        color: #ff0000;
-    }
+.container>.header {
+    height: 80px;
 }
-
 
 #keyboard {
     max-width: $maxWidth;
@@ -82,15 +75,33 @@ body {
 
 #typing_area {
     margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 150px;
+    text-align: left;
 
-    input {
-        background: #EEE;
+    input[type="text"] {
+        background: #ffff00;
         font-size: 40px;
         padding: 10px;
-        border: none;
+        outline: none;
+        border: 2px solid #c41c1c;
+        border-radius: 5px;
         margin-bottom: 15px;
-        width: $maxWidth;
+        // width: $maxWidth;
+        text-transform: capitalize;
+
+        &:focus {
+            border-color: #05f167;
+            background-color: #ffffff;
+        }
     }
+
+    // hide text on focus 
+    #textbox:focus+#typing_area_remark {
+        display: none;
+    }
+
 }
 
 // focus key either on hover or on selection
@@ -102,4 +113,67 @@ body {
 .select-error {
     box-shadow: 0 0 2px 2px #c41c1c;
     transition: box-shadow .3s ease;
+}
+
+#setting {
+    text-align: left;
+
+    .header {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        .set-button {
+            text-align: right;
+
+            &:hover {
+                color: #0a06e0;
+                cursor: pointer;
+                font-weight: bold;
+            }
+        }
+    }
+
+    .body {
+        border: 1px solid #1c94c4;
+        border-radius: 5px;
+        padding: 15px;
+        background-color: #cdc8c81f;
+        display: none;
+
+        &.show {
+            display: block;
+        }
+
+        .question-select {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        h3 {
+            margin: 15px 0 0 0;
+            font-weight: normal;
+        }
+
+        textarea {
+            width: 100%;
+        }
+    }
+
+    // input[type=checkbox] {
+    //     transform: scale(2);
+    // }
+
+    // input[type="number"] {
+    //     width: 50px;
+    //     font-size: 24px;
+    //     padding: 3px;
+    // }
+
+    // textarea {
+    //     width: 100%;
+    // }
+
+
+
+
 }

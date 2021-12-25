@@ -97,6 +97,10 @@ body {
         }
     }
 
+    #typing_area_remark {
+        color: #ff0000;
+    }
+
     // hide text on focus 
     #textbox:focus+#typing_area_remark {
         display: none;
@@ -122,6 +126,11 @@ body {
         display: grid;
         grid-template-columns: 1fr 1fr;
 
+        #score,
+        #correctness {
+            margin-right: 20px;
+        }
+
         .set-button {
             text-align: right;
 
@@ -138,7 +147,7 @@ body {
         border-radius: 5px;
         padding: 15px;
         background-color: #cdc8c81f;
-        display: none;
+        // display: none;
 
         &.show {
             display: block;
